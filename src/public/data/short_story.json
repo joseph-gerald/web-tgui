@@ -1,0 +1,73 @@
+{
+    "settings": {
+        "engine": {
+            "mode": "comfy"
+        }
+    },
+    "data": {
+        "entry": {
+            "text": "Hello, look at this!",
+            "options": {
+                "Start Story": "greet"
+            }
+        },
+        "greet": {
+            "text": "Jack: Hey, who are you?",
+            "options": {
+                "query:Whats your name?": "name:name_given"
+            }
+        },
+        "name_given": {
+            "text": "Jack: Nice to meet you, {name}! How are you?",
+            "options": {
+                "I'm well": "im_well",
+                "I'm not well": "im_not_well"
+            }
+        },
+        "im_well": {
+            "text": "Jack: That's great! I'm glad to hear it.",
+            "options": {
+                "How are you?": "how_are_you"
+            }
+        },
+        "im_not_well": {
+            "text": "Jack: Oh no! I'm sorry to hear that.",
+            "options": {
+                "How are you?": "how_are_you"
+            }
+        },
+        "how_are_you": {
+            "text": "Jack: I'm doing well, thanks for asking.\n\nJack: I'm a bit busy right now, but I'll talk to you later, okay?",
+            "options": {
+                "Goodbye": "goodbye",
+                "No don't go!": "dont_go"
+            }
+        },
+        "dont_go": {
+            "text": "Jack: Oh, what do you want to talk about?",
+            "options": {
+                "confess: I love you": "love",
+                "confess: I hate you": "hate"
+            }
+        },
+        "love": {
+            "text": "{name}: I love you Jack!\nJack: I love you too, {name}!",
+            "options": {
+                "Goodbye": "goodbye"
+            }
+        },
+        "hate": {
+            "text": "{name}: I hate you Jack!\nJack: Oh, I'm sorry to hear that.",
+            "options": {
+                "Goodbye": "goodbye"
+            }
+        },
+        "goodbye": {
+            "text": "Jack: Goodbye, {name}!",
+            "options": {
+                "Start Again": "entry",
+                "Exit": "href:jooo.tech"
+            }
+        }
+    }
+}

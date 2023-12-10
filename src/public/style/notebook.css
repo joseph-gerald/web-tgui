@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick Hand&display=swap");
+
+body {
+    font-family: "Patrick Hand";
+    background: #402F1D;
+    background-image: url("/assets/wood-pattern.png");
+
+    color: #111;
+}
+
+#background {
+    background: linear-gradient(to top, black 1px, rgba(255, 250, 233,0.5) 1px);
+    background-size: 20px 35px;
+    backdrop-filter: blur(10px);
+
+    transition-duration: 0.5s;
+
+    border-left: 1px rgba(255,50,50,0.75) solid;
+}
+
+#background::after {
+    z-index: -1;
+    content: "";
+    display: flex;
+    width: 20px;
+    height: 100%;
+    margin-left: -21px;
+
+    background: linear-gradient(to top, black 1px, rgba(255, 250, 233,0.5) 1px);
+    background-size: 20px 35px;
+    backdrop-filter: blur(10px);
+  }
+
+  
+#container {
+    font-size: 20px;
+
+    width: 800px;
+    margin-top: 70px;
+    transition: height .75s;
+}
+
+#content {
+    padding: 5px 10px;
+
+    line-height: 35px;
+}
+
+.options {
+    background-color: rgba(0,0,0,0.2);
+    color: rgba(255,255,255,0.85);
+    font-weight: bold;
+    margin-top: 38px;
+
+    backdrop-filter: blur(10px);
+
+    padding: 5px 10px;
+}
+
+.option.animate {
+    transform: rotateX(90deg)
+}
+
+.option {
+    transition: transform 0.2s, opacity 0.25s ease-in-out;
+
+    transform: none;
+    
+    margin: -2px 0;
+    scale: 100%;
+}
+
+.option.hide {
+    transition: all 0.35s;
+    opacity: 0;
+    transform: translateX(0px);
+}
+
+.option.show.clicked {
+    transform: translateX(0px);
+    opacity: 0.8;
+}

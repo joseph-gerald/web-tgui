@@ -1,138 +1,230 @@
+// DOM elements
+const background = document.getElementById("background");
 const content = document.getElementById("content");
-const typeSound = new Audio("assets/type_1.wav");
-const beepSound = new Audio("assets/beep.wav");
+let optionsContainer = null;
+let data = {};
 
-const optionsContainer = document.createElement("div");
-optionsContainer.classList.add("options");
-
-content.appendChild(optionsContainer);
-
-for (const audio of [typeSound, beepSound]) audio.load();
-
-const data = {
-    start: {
-        "text": "Hello, look at this!",
-        options: {
-            "Hello": "hello",
-            "World": "world",
-            "Yap machine": "yap",
-        }
+// Typing experience settings
+const settings = {
+    typingSounds: {
+        comfy: "assets/type_1.wav",
+        hacker: "assets/type_2.wav",
+        notebook: "assets/type_2.wav",
     },
-    hello: {
-        "text": "Hello!",
-        options: {
-            "Back": "start"
-        }
-    },
-    world: {
-        "text": "World!",
-        options: {
-            "Back": "start"
-        }
-    },
-    yap: {
-        "text": "YAP ".repeat(100),
-        options: {
-            "Back": "start"
-        }
-    }
-}
+    typingSpeeds: { comfy: 2, hacker: 2, notebook: 4 },
+    typingSoundSpeed: { comfy: 1, hacker: 0.5, notebook: 1.5 },
+    typingSoundFrequency: { comfy: 4, hacker: 2, notebook: 3 },
+    beepSoundSpeed: { comfy: 1, hacker: 0.75, notebook: 2.75 },
+};
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Typing modes
+const modes = { comfy: "comfy", hacker: "hacker", notebook: "notebook" };
 
-function playSound(sound, playbackRate = 1, volume = 1) {
-    const audio = sound.cloneNode();
-    audio.mozPreservesPitch = false;
-    audio.playbackRate = playbackRate;
-    audio.volume = volume;
-    audio.play();
-}
+const mode = modes.notebook;
 
-function playKeypressSound() {
-    playSound(typeSound, 3 + Math.random());
-}
+// Fetch data
+fetch("data/showcase.json").then(res => res.json()).then(init);
 
-async function playBeepSound() {
-    await sleep(500);
-    playSound(beepSound, 1 - 0.35 + Math.random() * 0.4, 0.5);
-}
+function init(input) {
+    // load data
+    const { data, settings: { engine: { mode } } } = input;
+    const experienceData = {};
 
-async function adjustSize() {
-    const oldHeight = content.style.height;
-    content.style.height = 'auto';
+    // Dynamically add stylesheet based on mode
+    document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="style/${mode}.css" />`);
 
-    var fullSize = content.scrollHeight - 10;
-    content.style.height = oldHeight;
+    // Audio elements for typing and beep sounds
+    const typeSound = new Audio(settings.typingSounds[mode]);
+    const beepSound = new Audio("assets/beep.wav");
 
-    await sleep(0);
-    content.style.height = fullSize + 'px';
-}
+    for (const audio of [typeSound, beepSound]) audio.load();
 
-async function typeText(text) {
-    const frequency = 2;
-    for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const span = document.createElement("span");
-        span.innerHTML = char;
-        content.appendChild(span);
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        let delay = 30;
-
-        const delays = {
-            ",": 100,
-            ".": 100,
-            "?": 100,
-            "!": 100,
-            "\n": 100,
-        }
-
-        if (char in delays) {
-            delay = delays[char];
-        }
-
-        if (i % frequency == 0) playKeypressSound();
-        await sleep(delay);
-    }
-}
-
-async function displayOptions(options) {
-
-    const optionsContainer = document.createElement("div");
-    optionsContainer.classList.add("options");
-
-    content.appendChild(optionsContainer);
-    for (const [text, path] of Object.entries(options)) {
-        const option = document.createElement("div");
-        option.classList.add("option");
-        option.classList.add("animate");
-        option.innerHTML = "> " + text;
-        option.addEventListener("mousedown", () => { renderData(data[path]) });
-        optionsContainer.appendChild(option);
+    // sound play util
+    function playSound(sound, playbackRate = 1, volume = 1) {
+        const audio = sound.cloneNode();
+        audio.mozPreservesPitch = false;
+        audio.playbackRate = playbackRate;
+        audio.volume = volume;
+        audio.play();
     }
 
-    for (const option of optionsContainer.children) {
+    // play typing sound
+    function playKeypressSound() {
+        playSound(typeSound, 3 * settings.typingSoundSpeed[mode] + Math.random(), 0.5);
+    }
+
+    // play beep sound
+    async function playBeepSound() {
         await sleep(100);
-        option.classList.remove("animate");
-        playBeepSound();
+        playSound(beepSound, settings.beepSoundSpeed[mode] - 0.35 + Math.random() * 0.4, 0.5);
     }
 
-    
-    for (const option of optionsContainer.children) {
-        option.classList.add("show");
+    // adjust the background
+    async function adjustSize() {
+        var fullSize = content.scrollHeight;
+        background.style.height = fullSize + 'px';
+        background.style.width = content.scrollWidth + 'px';
     }
+
+    // typewriter effect
+    async function typeText(text) {
+        const frequency = settings.typingSoundFrequency[mode];
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            const span = document.createElement("span");
+            content.appendChild(span);
+
+            let delay = 30 * (0.5 + Math.random());
+
+            const delays = { ",": 100, ".": 100, "?": 100, "!": 100, "\n": 100 };
+
+            if (char in delays) delay = delays[char];
+
+            if (i % frequency == 0) playKeypressSound();
+
+            const predictionSize = settings.typingSpeeds[mode] * 2.75;
+            let predicted = "";
+            for (let j = 0; j < predictionSize; j++) {
+                if (i + j < text.length) predicted += text[i + j];
+            }
+
+            span.innerHTML = predicted;
+            adjustSize();
+            span.innerHTML = char == "\n" ? "<br>" : char;
+
+            await sleep(delay / settings.typingSpeeds[mode]);
+        }
+    }
+
+    // handle clicks for options
+    async function handleClick(path, elm) {
+        for (const options of optionsContainer.children) {
+            if (options == elm) continue;
+            options.classList.remove("show");
+            options.classList.add("hide");
+        }
+
+        elm.classList.add("clicked");
+
+        if (path.indexOf("href:") == 0) {
+            window.location.href = path.slice(5);
+            return;
+        }
+
+        await sleep(300);
+
+        renderData(data[path]);
+    }
+
+    // create option
+    function handleOption(text, path) {
+        const option = document.createElement("div");
+
+        if (text.indexOf("query:") == 0) {
+            const description = text.slice(6);
+
+            const input = document.createElement("input");
+            const variable_name = path.split(":")[0];
+            const destination = path.split(":")[1];
+
+            option.classList.add("option");
+            option.classList.add("input");
+            option.classList.add("animate");
+
+            option.appendChild(document.createTextNode(description));
+            option.appendChild(input);
+
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key == "Enter") {
+                    const query = input.value;
+                    experienceData[variable_name] = query;
+                    renderData(data[destination]);
+                }
+            });
+
+            optionsContainer.appendChild(option);
+            input.focus();
+            return option;
+        }
+
+        option.classList.add("option");
+        option.classList.add("choice");
+        option.classList.add("animate");
+
+        let finalText = text;
+
+        for (const [key, value] of Object.entries(experienceData)) {
+            finalText = finalText.replaceAll(`{${key}}`, value);
+        }
+
+        let textNode = document.createTextNode(finalText);
+        option.appendChild(textNode);
+        option.setAttribute("path", path);
+
+        option.addEventListener("mousedown", () => handleClick(path, option));
+
+        optionsContainer.appendChild(option);
+        return option;
+    }
+
+    // display options
+    async function displayOptions(options) {
+        optionsContainer = document.createElement("div");
+        optionsContainer.classList.add("options");
+
+        content.appendChild(optionsContainer);
+
+        for (const [text, path] of Object.entries(options)) {
+            const option = handleOption(text, path);
+        }
+
+        for (const option of optionsContainer.children) {
+            await sleep(125);
+            option.classList.remove("animate");
+            playBeepSound();
+        }
+
+        await sleep(100);
+
+        for (const option of optionsContainer.children) {
+            option.classList.add("show");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            const index = parseInt(e.key);
+            
+            if (isNaN(index)) return;
+            if (index > optionsContainer.children.length) return;
+            if (index < 1) return;
+            const option = optionsContainer.children[index - 1];
+            if (!option.classList.contains("choice")) return;
+            handleClick(option.getAttribute("path"), option);
+        }, { once: true });
+    }
+
+    // render data on the screen
+    async function renderData(data) {
+        content.innerHTML = "";
+
+        let finalText = data.text;
+
+        for (const [key, value] of Object.entries(experienceData)) {
+            finalText = finalText.replaceAll(`{${key}}`, value);
+        }
+
+        await typeText(finalText);
+        await displayOptions(data.options);
+    }
+
+    // start the experience
+    async function start() {
+        document.removeEventListener("mousedown", start);
+        await renderData(data.entry);
+    }
+
+    // Event listener to start the experience on mousedown
+    document.addEventListener("mousedown", start);
 }
-
-async function renderData(data) {
-    content.innerHTML = "";
-
-    await typeText(data.text)
-    await displayOptions(data.options);
-    adjustSize();
-}
-
-function start() {
-    renderData(data.start);
-    document.removeEventListener("mousedown", start);
-}
-
-document.addEventListener("mousedown", start)

@@ -1,0 +1,54 @@
+{
+    "settings": {
+        "engine": {
+            "mode": "comfy"
+        }
+    },
+    "data": {
+        "entry": {
+            "text": "Hello, look at this!",
+            "options": {
+                "Greet": "greet",
+                "Hello": "world",
+                "Yap machine": "yap"
+            }
+        },
+        "greet": {
+            "text": "Jack: Hey, who are you?",
+            "options": {
+                "query:Whats your name?": "name:name_given"
+            }
+        },
+        "name_given": {
+            "text": "Jack: Nice to meet you, {name}! How are you?",
+            "options": {
+                "I'm well": "im_well",
+                "I'm not well": "im_not_well"
+            }
+        },
+        "im_well": {
+            "text": "Jack: That's great! I'm glad to hear it.",
+            "options": {
+                "Back": "entry"
+            }
+        },
+        "im_not_well": {
+            "text": "Jack: Oh no! I'm sorry to hear that.",
+            "options": {
+                "Back": "entry"
+            }
+        },
+        "world": {
+            "text": "World!",
+            "options": {
+                "Back": "entry"
+            }
+        },
+        "yap": {
+            "text": "TempleOS is a 64-bit, non-preemptive multi-tasking,[8] multi-cored, public domain, open source, ring-0-only, single address space, non-networked, PC operating system for recreational programming.[9] The OS runs 8-bit ASCII with graphics in source code and has a 2D and 3D graphics library, which run at 640x480 VGA with 16 colors.[5] Like most modern operating systems, it has keyboard and mouse support.",
+            "options": {
+                "Back": "entry"
+            }
+        }
+    }
+}

@@ -1,41 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+
 body {
+    font-family: "Indie Flower";
+
     background: #e5dfef;
     background-image: radial-gradient(rgb(50, 50, 50) 1px, transparent 0);
     background-size: 35px 35px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin: 0;
 }
 
-#content {
-    padding: 5px 10px;
-
-    font-family: "Indie Flower";
-    font-size: 25px;
-
+#background {
     background-color: rgba(120, 120, 120, .25);
     backdrop-filter: blur(10px);
-
     box-shadow: 2px 2px 4px rgba(0, 0, 0, .267);
+
+    border-radius: 3px;
+
+    transition-duration: 0.5s;
+}
+
+#container {
+    font-size: 25px;
 
     width: 800px;
     margin-top: 70px;
     transition: height .75s;
-
-    height: 40px;
 }
 
-@media (max-width: 880px) {
-    #content {
-        width: calc(100% - 80px);
-    }
-}
-
-.options {
-    margin-top: 20px;
+#content {
+    padding: 5px 10px;
 }
 
 .option.animate {
@@ -51,21 +43,9 @@ body {
 
 .option {
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    transition-delay: 0.5s;
 
     transform: none;
     opacity: 100%;
     scale: 100%;
     filter: blur(0px);
-}
-
-.option.show {
-    transition-delay: 0s;
-    cursor: pointer;
-    transform: translateX(0px);
-
-}
-
-.option.show:hover {
-    transform: translateX(5px);
 }

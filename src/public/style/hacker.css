@@ -1,0 +1,47 @@
+body {
+    background: #050505;
+
+    color: #20C20E;
+
+    font-family: monospace;
+}
+
+#background {
+    background-color: rgba(20, 20, 20, .25);
+    backdrop-filter: blur(20px);
+
+    transition-duration: 0.1s;
+}
+
+#container {
+    font-size: 20px;
+
+    width: 800px;
+    margin-top: 70px;
+    transition: height .75s;
+}
+
+#content {
+    padding: 5px 10px;
+}
+
+.option.animate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    opacity: 0%;
+    transform: scaleX(150%) scaleY(125%) rotateX(90deg);
+    scale: 50%;
+}
+
+.option {
+    transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
+
+    transform: none;
+    opacity: 100%;
+    scale: 100%;
+    filter: blur(0px);
+
+    margin: 4px 0;
+}

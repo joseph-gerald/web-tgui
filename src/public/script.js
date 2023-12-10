@@ -27,6 +27,7 @@ fetch("data/showcase.json").then(res => res.json()).then(init);
 
 function init(input) {
     // load data
+    input.settings.engine.mode = modes[Object.keys(modes)[Math.floor(Math.random() * Object.keys(modes).length)]];
     const { data, settings: { engine: { mode } } } = input;
     const experienceData = {};
 

@@ -4,30 +4,56 @@ const content = document.getElementById("content");
 let optionsContainer = null;
 let data = {};
 
+const params = new URLSearchParams(window.location.search);
+const param = params.get('p');
+
 // Typing experience settings
 const settings = {
     typingSounds: {
         comfy: "assets/type_1.wav",
         hacker: "assets/type_2.wav",
         notebook: "assets/type_2.wav",
+        halloween: "assets/type_1.wav",
+        blue: "assets/type_2.wav",
+        note: "assets/type_1.wav",
     },
-    typingSpeeds: { comfy: 2, hacker: 2, notebook: 4 },
-    typingSoundSpeed: { comfy: 1, hacker: 0.5, notebook: 1.5 },
-    typingSoundFrequency: { comfy: 4, hacker: 2, notebook: 3 },
-    beepSoundSpeed: { comfy: 1, hacker: 0.75, notebook: 2.75 },
+    typingSpeeds: {},
+    typingSoundSpeed: {},
+    typingSoundFrequency: {},
+    beepSoundSpeed: {},
 };
 
-// Typing modes
-const modes = { comfy: "comfy", hacker: "hacker", notebook: "notebook" };
+
+const comfy = [2, 1, 4, 1];
+const hacker = [2, 0.5, 2, 0.75];
+const notebook = [4, 1.5, 3, 2.75];
+
+const halloween = [2, 1, 4, 1];
+const blue = [5, 1, 4, 1];
+const note = [10, 1.5, 4, 2.75]; // sticky note
+
+const modes = "comfy, hacker, notebook, halloween, blue, note".split(", ").reduce((acc, cur) => ({ ...acc, [cur]: cur }), {});
+
+for (const [mode, [typingSpeed, typingSoundSpeed, typingSoundFrequency, beepSoundSpeed]] of Object.entries(
+    { comfy, hacker, notebook, halloween, blue, note }
+)) {
+    settings.typingSpeeds[mode] = typingSpeed;
+    settings.typingSoundSpeed[mode] = typingSoundSpeed;
+    settings.typingSoundFrequency[mode] = typingSoundFrequency;
+    settings.beepSoundSpeed[mode] = beepSoundSpeed;
+}
 
 const mode = modes.notebook;
 
 // Fetch data
-fetch("data/showcase.json").then(res => res.json()).then(init);
+fetch(param ? `data/${param}.json` : "data/showcase.json").then(res => res.json()).then(init);
 
 function init(input) {
     // load data
-    input.settings.engine.mode = modes[Object.keys(modes)[Math.floor(Math.random() * Object.keys(modes).length)]];
+    if (input.settings.engine.mode == "random") {
+        input.settings.engine.mode = modes[Object.keys(modes)[Math.floor(Math.random() * Object.keys(modes).length)]];
+    }
+
     const { data, settings: { engine: { mode } } } = input;
     const experienceData = {};
 
@@ -110,7 +136,7 @@ function init(input) {
         elm.classList.add("clicked");
 
         if (path.indexOf("href:") == 0) {
-            window.location.href = path.slice(5);
+            window.open(path.slice(5));
             return;
         }
 
@@ -196,7 +222,7 @@ function init(input) {
 
         document.addEventListener("keydown", (e) => {
             const index = parseInt(e.key);
-            
+
             if (isNaN(index)) return;
             if (index > optionsContainer.children.length) return;
             if (index < 1) return;

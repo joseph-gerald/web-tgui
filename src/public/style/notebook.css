@@ -26,7 +26,7 @@ body {
     height: 100%;
     margin-left: -21px;
 
-    background: linear-gradient(to top, black 1px, rgba(255, 250, 233,0.5) 1px);
+    background: linear-gradient(to top, black 1px, rgba(255, 250, 233,0.55) 1px);
     background-size: 20px 35px;
     backdrop-filter: blur(10px);
   }
@@ -37,7 +37,6 @@ body {
 
     width: 800px;
     margin-top: 70px;
-    transition: height .75s;
 }
 
 #content {

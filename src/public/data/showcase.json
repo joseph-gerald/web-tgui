@@ -1,40 +1,22 @@
 {
     "settings": {
         "engine": {
-            "mode": "comfy"
+            "mode": "random"
         }
     },
     "data": {
         "entry": {
-            "text": "Hello, look at this!",
+            "text": "Welcome to the showcase, the theme is randomized, refreshing the page will change the theme.\n\nP.S. You can also use your keyboard by pressing (1-9)\ne.g. Press 1 to select the first option.",
             "options": {
-                "Greet": "greet",
+                "Stories": "stories",
                 "Hello": "world",
-                "Yap machine": "yap"
+                "What is TempleOS?": "yap"
             }
         },
-        "greet": {
-            "text": "Jack: Hey, who are you?",
+        "stories": {
+            "text": "Choose one of the stories below.",
             "options": {
-                "query:Whats your name?": "name:name_given"
-            }
-        },
-        "name_given": {
-            "text": "Jack: Nice to meet you, {name}! How are you?",
-            "options": {
-                "I'm well": "im_well",
-                "I'm not well": "im_not_well"
-            }
-        },
-        "im_well": {
-            "text": "Jack: That's great! I'm glad to hear it.",
-            "options": {
-                "Back": "entry"
-            }
-        },
-        "im_not_well": {
-            "text": "Jack: Oh no! I'm sorry to hear that.",
-            "options": {
+                "The Lovely Pigs": "href:?p=short_story",
                 "Back": "entry"
             }
         },

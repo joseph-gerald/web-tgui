@@ -1,72 +1,162 @@
 {
     "settings": {
         "engine": {
-            "mode": "comfy"
+            "mode": "note"
         }
     },
     "data": {
         "entry": {
-            "text": "Hello, look at this!",
+            "text": "In the heart of Piggy Island, where the emerald-green meadows meet the azure sky, you encounter King Pig. He looks up and exclaims, 'Who's there!'",
             "options": {
                 "Start Story": "greet"
             }
         },
         "greet": {
-            "text": "Jack: Hey, who are you?",
+            "text": "King Pig: Hey, who are you?",
             "options": {
-                "query:Whats your name?": "name:name_given"
+                "query:What's your name?": "name:name_given"
             }
         },
         "name_given": {
-            "text": "Jack: Nice to meet you, {name}! How are you?",
+            "text": "King Pig: Ah, {name}! A pleasure to meet you. How's your day shaping up?",
             "options": {
-                "I'm well": "im_well",
-                "I'm not well": "im_not_well"
+                "It's going well": "im_well",
+                "Could be better": "im_not_well"
             }
         },
         "im_well": {
-            "text": "Jack: That's great! I'm glad to hear it.",
+            "text": "King Pig: Excellent! The sun is shining, the birds are singing, and all is well in the kingdom.",
             "options": {
-                "How are you?": "how_are_you"
+                "How about you?": "how_are_you"
             }
         },
         "im_not_well": {
-            "text": "Jack: Oh no! I'm sorry to hear that.",
+            "text": "King Pig: Oh dear, I hope the day takes a turn for the better. Anything I can do to make it brighter?",
             "options": {
-                "How are you?": "how_are_you"
+                "How about a chat?": "how_are_you",
+                "I'll be fine, thanks": "how_are_you"
             }
         },
         "how_are_you": {
-            "text": "Jack: I'm doing well, thanks for asking.\n\nJack: I'm a bit busy right now, but I'll talk to you later, okay?",
+            "text": "King Pig: I'm doing well, thanks for asking.\n\nKing Pig: I'm a bit busy right now, but I'll talk to you later, okay?",
             "options": {
                 "Goodbye": "goodbye",
-                "No don't go!": "dont_go"
+                "No, don't go!": "dont_go"
             }
         },
         "dont_go": {
-            "text": "Jack: Oh, what do you want to talk about?",
+            "text": "King Pig: Oh, what do you want to talk about?",
             "options": {
-                "confess: I love you": "love",
-                "confess: I hate you": "hate"
+                "confess: I love you": "love"
             }
         },
         "love": {
-            "text": "{name}: I love you Jack!\nJack: I love you too, {name}!",
+            "text": "{name}: King Pig, there's something I've been meaning to tell you.\nKing Pig: Oh? What is it, {name}?",
+            "options": {
+                "Express your feelings": "express_feelings",
+                "Keep it to yourself": "keep_silent"
+            }
+        },
+        "express_feelings": {
+            "text": "{name}: I've come to realize that I care about you more than I initially thought. You make my days brighter.",
+            "options": {
+                "How do you feel about me?": "kingpig_feelings",
+                "Keep it a secret": "keep_silent"
+            }
+        },
+        "kingpig_feelings": {
+            "text": "King Pig: {name}, I must admit, you've brought joy to my kingdom. I value our time together.",
+            "options": {
+                "Meet at sunset": "sunset",
+                "Stay friends": "stay_friends"
+            }
+        },
+        "sunset": {
+            "text": "As the sun sets, casting a warm glow over Piggy Island, you and King Pig meet near the golden fields.",
+            "options": {
+                "Embrace King Pig": "embrace",
+                "Hold King Pig's hand": "hold_hands"
+            }
+        },
+        "embrace": {
+            "text": "You gently embrace King Pig, feeling a warmth in your heart. The world seems to fade away as you share a tender moment.",
+            "options": {
+                "Kiss King Pig": "kiss",
+                "Whisper sweet nothings": "whisper"
+            }
+        },
+        "hold_hands": {
+            "text": "You and King Pig hold hands, fingers intertwined. There's a magical connection between you two as you enjoy the beauty of the sunset.",
+            "options": {
+                "Lean in for a kiss": "kiss",
+                "Express your feelings": "express_feelings"
+            }
+        },
+        "kiss": {
+            "text": "Under the canvas of stars, you and King Pig share a magical kiss, sealing your love for each other.",
+            "options": {
+                "Continue the moment": "continue_moment",
+                "Reflect on the kiss": "reflect_kiss"
+            }
+        },
+        "continue_moment": {
+            "text": "The kiss deepens, and time seems to stand still. King Pig pulls you closer, and the world around you becomes a blur.",
+            "options": {
+                "Whisper sweet promises": "whisper_promises",
+                "Bask in the moment": "bask_moment"
+            }
+        },
+        "reflect_kiss": {
+            "text": "{name}: That kiss was truly magical.\nKing Pig: {name}, it was. I've never felt such a connection before.",
+            "options": {
+                "Continue the moment": "continue_moment",
+                "Express your feelings": "express_feelings"
+            }
+        },
+        "whisper_promises": {
+            "text": "{name}: King Pig, I promise to stand by your side, through good times and bad.\nKing Pig: {name}, I promise to cherish you always.",
+            "options": {
+                "Seal the promises with another kiss": "seal_kiss",
+                "Express your love": "express_love"
+            }
+        },
+        "bask_moment": {
+            "text": "You and King Pig bask in the afterglow of the kiss, savoring the intimacy of the moment.",
+            "options": {
+                "Whisper sweet promises": "whisper_promises",
+                "Express your love": "express_love"
+            }
+        },
+        "seal_kiss": {
+            "text": "As you seal your promises with another kiss, you feel a bond that transcends words. The night unfolds as a celebration of your newfound love.",
             "options": {
                 "Goodbye": "goodbye"
             }
         },
-        "hate": {
-            "text": "{name}: I hate you Jack!\nJack: Oh, I'm sorry to hear that.",
+        "express_love": {
+            "text": "{name}: King Pig, I love you more than words can express.\nKing Pig: {name}, I feel the same way. You've captured my heart completely.",
+            "options": {
+                "Seal the moment with a kiss": "seal_kiss",
+                "Goodbye": "goodbye"
+            }
+        },
+        "stay_friends": {
+            "text": "King Pig: I value our friendship, {name}. Let's continue to share moments together.",
+            "options": {
+                "Goodbye": "goodbye"
+            }
+        },
+        "keep_silent": {
+            "text": "{name}: Maybe some things are better left unsaid. Let's cherish our friendship.",
             "options": {
                 "Goodbye": "goodbye"
             }
         },
         "goodbye": {
-            "text": "Jack: Goodbye, {name}!",
+            "text": "King Pig: Goodbye, {name}!",
             "options": {
                 "Start Again": "entry",
-                "Exit": "href:jooo.tech"
+                "Portfolio": "href:https://me.jooo.tech"
             }
         }
     }

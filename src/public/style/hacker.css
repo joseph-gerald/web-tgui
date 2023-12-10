@@ -18,7 +18,6 @@ body {
 
     width: 800px;
     margin-top: 70px;
-    transition: height .75s;
 }
 
 #content {
@@ -33,6 +32,12 @@ body {
     opacity: 0%;
     transform: scaleX(150%) scaleY(125%) rotateX(90deg);
     scale: 50%;
+}
+
+.option.hide {
+    transition: all 0.35s;
+    opacity: 0;
+    filter: blur(5px);
 }
 
 .option {

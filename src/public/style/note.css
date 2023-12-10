@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Mali&display=swap");
+
+body {
+    font-family: "Mali";
+
+    background: #e8eef7;
+    background-image: radial-gradient(rgb(50, 50, 50) 1px, transparent 0);
+    background-size: 5px 5px;
+}
+
+#background {
+    background-color: #f4f36780;
+    backdrop-filter: blur(10px);
+    box-shadow: 4px 4px 8px #4e4e1080;
+
+    transition-duration: 0.25s;
+}
+
+#container {
+    font-size: 25px;
+
+    width: 800px;
+    margin-top: 70px;
+}
+
+#content {
+    padding: 5px 10px;
+}
+
+.option.animate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    opacity: 0%;
+    transform: scaleX(150%) scaleY(125%) rotateX(90deg);
+    scale: 50%;
+}
+
+.option.input input {
+    font-family: inherit;
+    font-size: 20px;
+
+    border: none;
+
+    padding: 4px;
+
+    border-radius: 0;
+    backdrop-filter: blur(10px);
+    background-color: #f4f36780;
+    box-shadow: 4px 4px 8px #4e4e1080;
+    color: inherit;
+
+    outline: none;
+    transition: all 250ms;
+}
+
+.option.input input:focus {
+    border: #00000050 1px solid;
+    background-color: #f4f36780;
+}
+
+.option.hide {
+    transition: all 0.35s;
+    opacity: 0;
+    transform: rotateX(45deg);
+    filter: blur(5px);
+}
+
+.option {
+    transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
+
+    transform: none;
+    opacity: 100%;
+    scale: 100%;
+    filter: blur(0px);
+
+    margin: 4px 0;
+}
